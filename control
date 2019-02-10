@@ -5,7 +5,7 @@ Section: misc
 Homepage: https://github.com/drauger-os-development/wii-tooth
 Architecture: all
 Priority: standard
-Depends: 
+Depends: lswm (>=0.6.00+svn201-4), xwiimote (>=2-3build1), 
 Description: Wiimote Driver Daemon
  This app is a driver daemon for Wii remotes. It automounts Wii remotes through Bluetooth and maps their keys to Keyboard and Mouse input.
 
