@@ -1,0 +1,55 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+#
+#  wii-tooth
+#  
+#  Copyright 2019 Thomas Castleman <contact@draugeros.ml>
+#  
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#  
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#  
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
+#
+VERSION="0.0.1"
+help="
+Wii-Tooth, Version $VERSION
+
+Configures wminput for use and provides better configuration options.
+Has it's own daemon implementation of wminput.
+
+-d, --daemon	Run as daemon
+-h, --help	Print this Help Message and exit
+-v, --version	Print Version and Exit
+"
+if [ "$1" == "-d" ] || [ "$1" == "--daemon" ]; then
+	/bin/wii-tooth &
+	/bin/echo -e "\nwii-tooth is now running. Run \"kill $!\" or \"killall wiitooth\" to kill it.\n"
+	exit 0
+elif [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+	/echo/echo "$help"
+	exit 0
+elif [ "$1" == "-v" ] || [ "$1" == "--version" ]; then
+	/echo/echo -e "\nVersion: $VERSION\n"
+	exit 0
+fi
+x="1"
+while [ "$x" == "1" ]; do
+	/usr/bin/wminput -r -q -c /home/batcastle/Dropbox/GitHub/wii-tooth/etc/cwiid/wminput/wii-tooth-default.conf 2>check >/dev/null &
+	/bin/sleep 6s
+	if [ "$(/bin/echo $check | /bin/grep -q 'No wiimotes found')" == "1" ] && [ "$(/bin/echo $check | /bin/grep -q 'unable to connect')" == "1" ]; then
+		/usr/bin/notify-send "Wiimote Connected!"
+	else
+		continue
+	fi
+done
+		
