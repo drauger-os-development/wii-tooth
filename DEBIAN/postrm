@@ -1,0 +1,5 @@
+#!/bin/bash
+rm /etc/udev/rules.d/70-wii-tooth.rules
+for a in /home/*; do
+	rm "$a"/.config/autostart/wii-tooth.desktop
+done
