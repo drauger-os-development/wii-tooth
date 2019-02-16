@@ -20,20 +20,28 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-VERSION="0.0.1"
+VERSION="0.0.2"
 help="
 Wii-Tooth, Version $VERSION
 
 Configures wminput for use and provides better configuration options.
 Has it's own daemon implementation of wminput.
 
--d, --daemon	Run as daemon
--h, --help	Print this Help Message and exit
--v, --version	Print Version and Exit
+-d, --daemon			Run as daemon
+-h, --help			Print this Help Message and exit
+-v, --version			Print Version and Exit
+--disable [time in seconds]	Disable for the allotted time, or until next log in.
+				Whichever comes first. (passing nothing will disable
+				until next log in.)
 "
 if [ "$1" == "-d" ] || [ "$1" == "--daemon" ]; then
-	/bin/wii-tooth &
-	/bin/echo -e "\nwii-tooth is now running. Run \"kill $!\" or \"killall wiitooth\" to kill it.\n"
+	/etc/wii-tooth/wiimote-driver.sh &
+	pid="$!"
+	if [ -f /etc/wii-tooth/pid.flag ]; then
+		/bin/rm /etc/wii-tooth/pid.flag
+	fi
+	/bin/echo "$pid" > /etc/wii-tooth/pid.flag
+	/bin/echo -e "\nwii-tooth is now running. Run \"kill $pid\" or \"killall wiimote-driver.sh\" to kill it.\n"
 	exit 0
 elif [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 	/echo/echo "$help"
@@ -41,15 +49,21 @@ elif [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 elif [ "$1" == "-v" ] || [ "$1" == "--version" ]; then
 	/echo/echo -e "\nVersion: $VERSION\n"
 	exit 0
-fi
-x="1"
-while [ "$x" == "1" ]; do
-	/usr/bin/wminput -r -q -c /home/batcastle/Dropbox/GitHub/wii-tooth/etc/cwiid/wminput/wii-tooth-default.conf 2>check >/dev/null &
-	/bin/sleep 6s
-	if [ "$(/bin/echo $check | /bin/grep -q 'No wiimotes found')" == "1" ] && [ "$(/bin/echo $check | /bin/grep -q 'unable to connect')" == "1" ]; then
-		/usr/bin/notify-send "Wiimote Connected!"
+elif [ "$1" == "--disable" ]; then
+	if [ -f /etc/wii-tooth/pid.flag ]; then
+		/bin/kill "$(cat /etc/wii-tooth/pid.flag)"
+		/bin/rm /etc/wii-tooth/pid.flag
+		time="$2"
+		if [ "$time" == "" ] || [ "$time" == " " ] || [ -z ${time+x} ]; then
+			exit 0
+		else
+			/bin/sleep "$time"s
+			/etc/wii-tooth/wiimote-driver.sh &
+			exit 0
+		fi
 	else
-		continue
+		/bin/echo -e "\nwiimote-driver.sh does not appear to be running.\nIf it is, to kill it, run \"killall wiimote-driver.sh\".\n"
+		exit 2
 	fi
-done
+fi
 		
