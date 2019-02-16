@@ -3,3 +3,4 @@ echo 'KERNEL=="uinput", GROUP="users"' >> /etc/udev/rules.d/70-wii-tooth.rules
 for a in /home/*; do
 	echo "the contents of this echo should be the *.desktop file we need." >> "$a"/.config/autostart/wii-tooth.desktop
 done
+echo "uinput" >> /etc/modules
