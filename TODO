@@ -1,7 +1,0 @@
-1. echo 'KERNEL=="uinput", GROUP="users"' >> /etc/udev/rules.d/70-wii-tooth.rules
-
-2. Make a *.desktop file and place it in /home/*/.config/autostart
-	use this:
-	Exec=wminput -d
-
-3. Have some way of mapping it to Keyboard / Mouse

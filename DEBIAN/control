@@ -1,11 +1,11 @@
 Package: wii-tooth
-Version: 0.0.1
+Version: 0.0.2
 Maintainer: Thomas Castleman <contact@draugeros.ml>
 Section: misc
 Homepage: https://github.com/drauger-os-development/wii-tooth
 Architecture: all
 Priority: standard
-Depends:  wminput (>=0.6.00+svn201-4), udev (>=237-3ubuntu10.12)
+Depends:  wminput (>=0.6.00+svn201-4), udev (>=237-3ubuntu10.12), bash (>=4.4.18-2ubuntu1)
 Description: Wiimote Driver Daemon
  This app is a driver daemon for Wii remotes. It automounts Wii remotes through Bluetooth and maps their keys to Keyboard and Mouse input.
 
