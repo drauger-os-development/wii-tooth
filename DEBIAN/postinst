@@ -1,2 +1,2 @@
 #!/bin/bash
-chown "$(users)":"${users}" -R /etc/wii-tooth
+chown "$(users)":"$(users)" -R /etc/wii-tooth

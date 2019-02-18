@@ -47,7 +47,7 @@ elif [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 	/bin/echo "$help"
 	exit 0
 elif [ "$1" == "-v" ] || [ "$1" == "--version" ]; then
-	/echo/echo -e "\nVersion: $VERSION\n"
+	/bin/echo -e "\nVersion: $VERSION\n"
 	exit 0
 elif [ "$1" == "--disable" ]; then
 	if [ -f /etc/wii-tooth/pid.flag ]; then
