@@ -20,7 +20,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-VERSION="0.0.2"
+VERSION="0.0.3"
 help="
 Wii-Tooth, Version $VERSION
 
@@ -44,7 +44,7 @@ if [ "$1" == "-d" ] || [ "$1" == "--daemon" ]; then
 	/bin/echo -e "\nwii-tooth is now running. Run \"kill $pid\" or \"killall wiimote-driver.sh\" to kill it.\n"
 	exit 0
 elif [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-	/echo/echo "$help"
+	/bin/echo "$help"
 	exit 0
 elif [ "$1" == "-v" ] || [ "$1" == "--version" ]; then
 	/echo/echo -e "\nVersion: $VERSION\n"
