@@ -30,7 +30,7 @@ while true; do
 		/bin/rm check.flag
 		/bin/sleep 0.5s
 	fi
-	./check.sh &
+	/etc/wii-tooth/check.sh &
 	/bin/sleep 7s
 	if [[ ! -f check.flag ]]; then
 		/usr/bin/notify-send "Wiimote Connected"
