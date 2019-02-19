@@ -20,5 +20,5 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-/usr/bin/wminput -r -q -c $(/bin/pwd)/wii-tooth-default.conf >/dev/null 2>/dev/null
-/bin/touch $(/bin/pwd)/check.flag
+/usr/bin/wminput -r -q -c /etc/wii-tooth/wii-tooth-default.conf >/dev/null 2>/dev/null
+/bin/touch /etc/wii-tooth/check.flag

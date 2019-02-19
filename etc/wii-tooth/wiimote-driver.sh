@@ -26,14 +26,14 @@ while true; do
 		/bin/sleep 5s
 		continue
 	elif [[ -f check.flag ]] && [ "$x" == "1" ]; then
-		/usr/bin/notify-send "Wiimote Disconnected"
-		/bin/rm check.flag
+		/usr/bin/notify-send --app-name="Wii-Tooth" --icon="wmgui" "Wiimote Disconnected"
+		/bin/rm /etc/wii-tooth/check.flag
 		/bin/sleep 0.5s
 	fi
 	/etc/wii-tooth/check.sh &
 	/bin/sleep 7s
 	if [[ ! -f check.flag ]]; then
-		/usr/bin/notify-send "Wiimote Connected"
+		/usr/bin/notify-send --app-name="Wii-Tooth" --icon="wmgui" "wiimote Connected"
 		x="1"
 		/bin/sleep 10s
 	else

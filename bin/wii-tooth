@@ -20,7 +20,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-VERSION="0.0.8"
+VERSION="0.1.0"
 help="
 Wii-Tooth, Version $VERSION
 

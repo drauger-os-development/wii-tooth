@@ -1,8 +1,18 @@
 #!/bin/bash
-echo 'KERNEL=="uinput", GROUP="users"' >> /etc/udev/rules.d/70-wii-tooth.rules
+if [[ ! -f /etc/udev/rules.d/70-wii-tooth.rules ]; then
+	echo 'KERNEL=="uinput", GROUP="users"' >> /etc/udev/rules.d/70-wii-tooth.rules
+fi
 for a in /home/*; do
-	mkdir "$a"/.config/autostart
+	mkdir -p "$a"/.config/autostart
 	touch "$a"/.config/autostart/wii-tooth.desktop
-	echo -e "[Desktop Entry]\nName=Wii-Tooth Service\nComment=Wii Remote Driver configurator and key mapper\nGenericName=Wii-Tooth\nExec=wminput -d\nType=Application\nEncoding=UTF-8" > "$a"/.config/autostart/wii-tooth.desktop
+	if $(cat "$a"/.config/autostart/wii-tooth.desktop | grep -q "[Desktop Entry]"); then
+		continue
+	else
+		echo -e "[Desktop Entry]\nName=Wii-Tooth Service\nComment=Wii Remote Driver configurator and key mapper\nGenericName=Wii-Tooth\nExec=wminput -d\nType=Application\nEncoding=UTF-8" > "$a"/.config/autostart/wii-tooth.desktop
+	fi
 done
-echo "uinput" >> /etc/modules
+if $(cat /etc/modules | grep -q "uinput"); then
+	exit
+else
+	echo "uinput" >> /etc/modules
+fi
