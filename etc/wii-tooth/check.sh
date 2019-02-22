@@ -20,5 +20,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-/usr/bin/wminput -r -q -c /etc/wii-tooth/wii-tooth-default.conf >/dev/null 2>/dev/null
-/bin/touch /etc/wii-tooth/check.flag
+test=$(/usr/bin/wminput -r -q -c /etc/wii-tooth/wii-tooth-default.conf 2>&1 >/dev/null)
+if $(/bin/echo "$test" | /bin/grep -q "No wiimotes found"); then
+	/bin/touch /etc/wii-tooth/check.flag
+fi

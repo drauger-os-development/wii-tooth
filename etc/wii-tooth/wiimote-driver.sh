@@ -22,23 +22,30 @@
 #
 x="0"
 while true; do
-	if [[ ! -f check.flag ]] && [ "$x" == "1" ]; then
+	check="$(/bin/ls /etc/wii-tooth)"
+	/bin/echo "$check" | /bin/grep -q "check.flag"
+	test="$?"
+	if [ "$test" == "1" ] && [ "$x" == "1" ]; then
 		/bin/sleep 5s
 		continue
-	elif [[ -f check.flag ]] && [ "$x" == "1" ]; then
-		/usr/bin/notify-send --app-name="Wii-Tooth" --icon="wmgui" "Wiimote Disconnected"
+	elif [ "$test" == "0" ] && [ "$x" == "1" ]; then
+		/usr/bin/notify-send "Wiimote Disconnected"
 		/bin/rm /etc/wii-tooth/check.flag
 		/bin/sleep 0.5s
+	elif [ "$test" == "0" ] && [ "$x" == "0" ]; then
+		/bin/rm /etc/wii-tooth/check.flag
+		/bin/sleep 0.1s
 	fi
 	/etc/wii-tooth/check.sh &
-	/bin/sleep 7s
-	if [[ ! -f check.flag ]]; then
-		/usr/bin/notify-send --app-name="Wii-Tooth" --icon="wmgui" "wiimote Connected"
+	/bin/sleep 8s
+	check="$(/bin/ls /etc/wii-tooth)"
+	/bin/echo "$check" | /bin/grep -q "check.flag"
+	if [ "$?" == "1" ]; then
+		/usr/bin/notify-send "Wiimote Connected"
 		x="1"
 		/bin/sleep 10s
-	else
+	elif [ "$x" == "1" ]; then
 		x="0"
 		/bin/sleep 0.5s
 	fi
 done
-
