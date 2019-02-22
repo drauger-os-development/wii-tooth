@@ -1,16 +1,10 @@
 #!/bin/bash
-if [[ ! -f /etc/udev/rules.d/70-wii-tooth.rules ]; then
+if $(ls /etc/udev/rules.d | grep -p '70-wii-tooth.rules'); then
+	echo "udev rules already established. Continuing . . ."
+else
 	echo 'KERNEL=="uinput", GROUP="users"' >> /etc/udev/rules.d/70-wii-tooth.rules
+	echo "udev rules established."
 fi
-for a in /home/*; do
-	mkdir -p "$a"/.config/autostart
-	touch "$a"/.config/autostart/wii-tooth.desktop
-	if $(cat "$a"/.config/autostart/wii-tooth.desktop | grep -q "[Desktop Entry]"); then
-		continue
-	else
-		echo -e "[Desktop Entry]\nName=Wii-Tooth Service\nComment=Wii Remote Driver configurator and key mapper\nGenericName=Wii-Tooth\nExec=wminput -d\nType=Application\nEncoding=UTF-8" > "$a"/.config/autostart/wii-tooth.desktop
-	fi
-done
 if $(cat /etc/modules | grep -q "uinput"); then
 	exit
 else

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Wii-Tooth Service
+Comment=Wii Remote Driver configurator and key mapper
+GenericName=Wii-Tooth
+Exec=wii-tooth -d
+Type=Application
+Encoding=UTF-8
