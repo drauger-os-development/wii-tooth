@@ -21,7 +21,13 @@
 #  MA 02110-1301, USA.
 #
 x="0"
+echo "$$" > /etc/wii-tooth/pid.flag
 while true; do
+	STATUS=$(rfkill list | grep 'Bluetooth' -A 2 | grep 'Soft blocked: ')
+	if $(echo "$STAUS" | grep -q 'yes'); then
+		sleep 30s
+		continue
+	fi
 	check="$(/bin/ls /etc/wii-tooth)"
 	/bin/echo "$check" | /bin/grep -q "check.flag"
 	test="$?"

@@ -20,7 +20,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-VERSION="0.1.2"
+VERSION="0.1.3"
 help="
 Wii-Tooth, Version $VERSION
 
@@ -35,12 +35,11 @@ Has it's own daemon implementation of wminput.
 				until next log in.)
 "
 if [ "$1" == "-d" ] || [ "$1" == "--daemon" ]; then
-	/etc/wii-tooth/wiimote-driver.sh &
-	pid="$!"
 	if [ -f /etc/wii-tooth/pid.flag ]; then
 		/bin/rm /etc/wii-tooth/pid.flag
 	fi
-	/bin/echo "$pid" > /etc/wii-tooth/pid.flag
+	/etc/wii-tooth/wiimote-driver.sh &
+	pid="$(cat /etc/wii-tooth/pid.flag)"
 	/bin/echo -e "\nwii-tooth is now running. Run \"kill $pid\" or \"killall wiimote-driver.sh\" to kill it.\n"
 	exit 0
 elif [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
@@ -57,8 +56,7 @@ elif [ "$1" == "--disable" ]; then
 		if [ "$time" == "" ] || [ "$time" == " " ] || [ -z ${time+x} ]; then
 			exit 0
 		else
-			/bin/sleep "$time"s
-			/etc/wii-tooth/wiimote-driver.sh &
+			(/bin/sleep "$time"; /etc/wii-tooth/wiimote-driver.sh) &
 			exit 0
 		fi
 	else
