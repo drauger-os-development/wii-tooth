@@ -1,12 +1,13 @@
 #!/bin/bash
-if $(ls /etc/udev/rules.d | grep -p '70-wii-tooth.rules'); then
-	echo "udev rules already established. Continuing . . ."
+set -e
+if $(/bin/ls /etc/udev/rules.d | /bin/grep -p '70-wii-tooth.rules'); then
+	/bin/echo "udev rules already established. Continuing . . ."
 else
-	echo 'KERNEL=="uinput", GROUP="users"' >> /etc/udev/rules.d/70-wii-tooth.rules
-	echo "udev rules established."
+	/bin/echo 'KERNEL=="uinput", GROUP="users"' >> /etc/udev/rules.d/70-wii-tooth.rules
+	/bin/echo "udev rules established."
 fi
 if $(cat /etc/modules | grep -q "uinput"); then
 	exit
 else
-	echo "uinput" >> /etc/modules
+	/bin/echo "uinput" >> /etc/modules
 fi

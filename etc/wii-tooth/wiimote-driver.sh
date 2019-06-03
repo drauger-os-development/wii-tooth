@@ -3,7 +3,7 @@
 #
 #  wiimote-driver.sh
 #  
-#  Copyright 2019 Thomas Castleman <contact@draugeros.ml>
+#  Copyright 2019 Thomas Castleman <contact@draugeros.org>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,13 +21,16 @@
 #  MA 02110-1301, USA.
 #
 x="0"
-echo "$$" > /etc/wii-tooth/pid.flag
+/bin/echo "$$" > /etc/wii-tooth/pid.flag
 while true; do
-	STATUS=$(rfkill list | grep 'Bluetooth' -A 2 | grep 'Soft blocked: ')
-	if $(echo "$STAUS" | grep -q 'yes'); then
-		sleep 30s
-		continue
-	fi
+	{	STATUS=$(/usr/sbin/rfkill list | /bin/grep 'Bluetooth' -A 2 | /bin/grep 'Soft blocked: ')
+		if $(/bin/echo "$STAUS" | /bin/grep -q 'yes'); then
+			/bin/sleep 30s
+			continue
+		fi
+	} || {
+		/etc/wii-tooth/log-out.sh "1" "/etc/wii-tooth/wiimote-driver.sh" "Unknown Error: Cannot detect diabled Bluetooth."
+	}
 	check="$(/bin/ls /etc/wii-tooth)"
 	/bin/echo "$check" | /bin/grep -q "check.flag"
 	test="$?"

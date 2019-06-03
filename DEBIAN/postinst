@@ -1,3 +1,4 @@
 #!/bin/bash
-chown "$(users)":"$(users)" -R /etc/wii-tooth
-echo -e "\n\aNOTICE: In order to use wii-tooth, please restart your computer and make sure Bluetooth is enabled.\n"
+set -e 
+/bin/chown "$(users)":"$(users)" -R /etc/wii-tooth
+/bin/echo -e "\n\aNOTICE: In order to use wii-tooth, please restart your computer and make sure Bluetooth is enabled.\n"

@@ -1,3 +1,4 @@
 #!/bin/bash
-rm /etc/udev/rules.d/70-wii-tooth.rules
-sed -i 's/uinput//g' /etc/modules
+set -e
+/bin/rm /etc/udev/rules.d/70-wii-tooth.rules
+/bin/sed -i 's/uinput//g' /etc/modules

@@ -3,7 +3,7 @@
 #
 #  wii-tooth
 #  
-#  Copyright 2019 Thomas Castleman <contact@draugeros.ml>
+#  Copyright 2019 Thomas Castleman <contact@draugeros.org>
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-VERSION="0.1.3"
+VERSION="0.1.5"
 help="
 Wii-Tooth, Version $VERSION
 
