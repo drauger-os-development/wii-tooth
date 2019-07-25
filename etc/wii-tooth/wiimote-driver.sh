@@ -29,7 +29,7 @@ while true; do
 			continue
 		fi
 	} || {
-		/etc/wii-tooth/log-out.sh "1" "/etc/wii-tooth/wiimote-driver.sh" "Unknown Error: Cannot detect diabled Bluetooth."
+		/etc/wii-tooth/log-out "1" "/etc/wii-tooth/wiimote-driver.sh" "Unknown Error: Cannot detect disabled Bluetooth." "wii-tooth" "$PWD" "$0"
 	}
 	check="$(/bin/ls /etc/wii-tooth)"
 	/bin/echo "$check" | /bin/grep -q "check.flag"
@@ -47,9 +47,7 @@ while true; do
 	fi
 	/etc/wii-tooth/check.sh &
 	/bin/sleep 8s
-	check="$(/bin/ls /etc/wii-tooth)"
-	/bin/echo "$check" | /bin/grep -q "check.flag"
-	if [ "$?" == "1" ]; then
+	if [ -f /etc/wii-tooth/check.flag ]; then
 		/usr/bin/notify-send "Wiimote Connected"
 		x="1"
 		/bin/sleep 10s
